@@ -5,6 +5,7 @@
 
 1. Docker setup - wait till all containers are running
 ```sh
+cd docker_symfony 
 docker-compose up -d --build
 ```
 
@@ -13,31 +14,33 @@ docker-compose up -d --build
 docker-compose exec php /bin/bash
 ```
 
-5. Run command to install framework
+3. Run command to install packages
 ```sh
 composer install
 ```
 
-6. Update after composer.json changes
+4. Update after composer.json changes
 ```sh
 composer update
 ```
 
-7. Run command to create migrations after updating Models/Entities
+5. Run command to create migrations after updating Models/Entities
 ```sh
 symfony console doctrine:migration:diff | symfony console doctrine:migrations:generate
 ```
 
-8. Run command to run migration scripts 
+6. Run command to run migration scripts 
 ```sh
 symfony console doctrine:migrations:migrate
 ```
 
-9. Go to http://localhost:8080/author/ and add one author
+
+## First time run
+- Proceed steps 1. 2. 3. 6.
+
+- Go to http://localhost:8080/author/ and add one author
 - in code are all Author linked to row id 1(first user) due to excluded login functionality
 - not working without created user
 
-8. After that go to http://localhost:8080/post/ and do your magic
+- After that go to http://localhost:8080/post/ and do your magic
 - all the links are self explanatory
-
-https://stackoverflow.com/questions/65830568/doctrine-wont-generate-migration-for-new-entity
