@@ -1,0 +1,46 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: '../src/App/'
+    exclude:
+      - '../src/App/DependencyInjection/'
+      - '../src/App/Entity/'
+      - '../src/App/Kernel.php'
+
+  Blog\:
+    resource: '../src/Blog/'
+    exclude:
+      - '../src/Blog/DependencyInjection/'
+      - '../src/Blog/Entity/'
+      - '../src/Blog/Kernel.php'
+
+    # We can tell Symfony's messenger component to regard AppointmentBookingHandler
+    # as a handler when command classes are dispatched through the message bus.
+    # When a handler class is able to handle a given command object on the bus,
+    # Symfony will deal with invoking the handler for us.
+  Blog\Application\Handler\Post\CreatePostHandler:
+    tags: [messenger.message_handler]
+  Blog\Application\Handler\Post\RemovePostHandler:
+    tags: [ messenger.message_handler ]
+  Blog\Application\Handler\Post\UpdatePostHandler:
+    tags: [ messenger.message_handler ]
+  Blog\Application\Handler\Comment\CreateCommentHandler:
+    tags: [messenger.message_handler]
+  Blog\Application\Handler\Comment\RemoveCommentHandler:
+    tags: [messenger.message_handler]
+  Blog\Application\Handler\Comment\UpdateCommentHandler:
+    tags: [messenger.message_handler]
+
